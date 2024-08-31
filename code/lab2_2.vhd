@@ -1,13 +1,13 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 
-ENTITY lab2_1 IS
+ENTITY lab2_2 IS
     PORT (
         Ain, Bin, Cin, Din : IN STD_LOGIC;
-        a, b, c, d, e, f, g : OUT STD_LOGIC
+        a, b, c, d, e, f, g, prime: OUT STD_LOGIC
     );
 
-END lab2_1;
+END lab2_2;
 
 -- a: 0, 2, 3, 5, 6, 7, 8, 9, A, E, F
 -- b: 0, 1, 2, 3, 4, 7, 8, 9, A, D
@@ -51,20 +51,15 @@ END lab2_1;
 -- F:
 -- ( (Ain) AND (Bin) AND (Cin) AND (Din)                 )
 
-ARCHITECTURE dataflow OF lab2_1 IS
+ARCHITECTURE dataflow OF lab2_2 IS
 BEGIN
-    --A <= SW(3);
-    --B <= SW(2);
-    --C <= SW(1);
-    --D <= SW(0);
-
     a <= ((NOT Ain) AND (NOT Bin) AND (NOT Cin) AND (Din))     -- 1
          or ( (NOT Ain) AND (Bin) AND (NOT Cin) AND (NOT Din)) -- 4
          or ( (Ain) AND (NOT Bin) AND (Cin) AND (Din)       )  -- b
          or ( (Ain) AND (Bin) AND (NOT Cin) AND (NOT Din)   )  -- c
          or ( (Ain) AND (Bin) AND (NOT Cin) AND (Din)       ); -- d
 
-    b <= ((NOT Ain) AND (Bin) AND (NOT Cin) AND (Din)) -- 5
+    b <= ((NOT Ain) AND (Bin) AND (NOT Cin) AND (Din))     -- 5
          or ((NOT Ain) AND (Bin) AND (Cin) AND (NOT Din))  -- 6
          or ((Ain) AND (NOT Bin) AND (Cin) AND (Din)    )  -- b
          or ((Ain) AND (Bin) AND (NOT Cin) AND (NOT Din))  -- c
@@ -99,4 +94,11 @@ BEGIN
     g <= ( (NOT Ain) AND (NOT Bin) AND (NOT Cin) AND (NOT Din) )     -- 0
          or ( (NOT Ain) AND (NOT Bin) AND (NOT Cin) AND (Din)     )  -- 1
          or ( (NOT Ain) AND (Bin) AND (Cin) AND (Din)             ); -- 7
+
+    prime <= ( (NOT Ain) AND (NOT Bin) AND (Cin) AND (NOT Din)    )  -- 2
+             or ( (NOT Ain) AND (NOT Bin) AND (Cin) AND (Din)     )  -- 3
+             or ( (NOT Ain) AND (Bin) AND (NOT Cin) AND (Din)     )  -- 5
+             or ( (NOT Ain) AND (Bin) AND (Cin) AND (Din)         )  -- 7
+             or ( (Ain) AND (NOT Bin) AND (Cin) AND (Din)         )  -- 11
+             or ( (Ain) AND (Bin) AND (NOT Cin) AND (Din)         ); -- 13
 END dataflow;
